@@ -24,7 +24,8 @@ jobs:
       # Runs the Super-Linter action
       - name: Copy to destination
         run: |
-          echo "$SSH_PRIVATE_KEY" > private.key
+          echo $SSH_PRIVATE_KEY > private.key
+          ls -la
           scp -i  private.key README.md root@161.35.112.238:/root/files/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.CLOUD_KEY }}
