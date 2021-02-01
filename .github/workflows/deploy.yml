@@ -23,12 +23,11 @@ jobs:
 
       # Runs the Super-Linter action
       - name: Copy to destination
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private.key
-          chmod 600 private.key
-          eval `ssh-agent -s`
-          ssh-add private.key
-          scp -i private.key README.md root@$DROPLET_IP:/root/files/
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.CLOUD_KEY }}
-          DROPLET_IP: ${{secrets.CLOUD_IP}}
+        uses: horochx/deploy-via-scp@master
+        with:
+          local: README.md # eg: dist/*
+          remote: /files # eg: /home/github-action/www
+          host: ${{ secrets.CLOUD_IP }} # eg: example.com
+          port: 22 # eg: 22
+          user: root # eg: github-action
+          key: ${{ secrets.CLOUD_KEY }}
