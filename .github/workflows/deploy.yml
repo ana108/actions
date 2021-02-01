@@ -25,10 +25,10 @@ jobs:
       - name: Copy to destination
         run: |
           echo "$SSH_PRIVATE_KEY" > private.key
-          chmod 400 private.key
+          chmod 600 private.key
           eval `ssh-agent -s`
           ssh-add private.key
-          scp README.md root@$DROPLET_IP:/root/files/
+          scp -i private.key README.md root@$DROPLET_IP:/root/files/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.CLOUD_KEY }}
           DROPLET_IP: ${{secrets.CLOUD_IP}}
