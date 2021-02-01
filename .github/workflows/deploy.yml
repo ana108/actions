@@ -26,7 +26,7 @@ jobs:
         uses: horochx/deploy-via-scp@master
         with:
           local: README.md # eg: dist/*
-          remote: /files # eg: /home/github-action/www
+          remote: /root/files # eg: /home/github-action/www
           host: ${{ secrets.CLOUD_IP }} # eg: example.com
           port: 22 # eg: 22
           user: root # eg: github-action
