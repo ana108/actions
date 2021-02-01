@@ -25,8 +25,8 @@ jobs:
       - name: Copy to destination
         run: |
           echo $SSH_PRIVATE_KEY > private.key
+          eval `ssh-agent -s`
           ssh-add private.key
           scp README.md root@161.35.112.238:/root/files/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.CLOUD_KEY }}
-          TEST: ${{secrets.TEST}}
