@@ -1,0 +1,29 @@
+name: deploy
+
+push:
+  # Sequence of patterns matched against refs/heads
+  branches:    
+    # Push events on main branch
+    - main
+
+jobs:
+  # Set the job key. The key is displayed as the job name
+  # when a job name is not provided
+  move:
+    # Name the Job
+    name: Move to droplet
+    # Set the type of machine to run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Runs the Super-Linter action
+      - name: Copy to destination
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private.key
+          scp -i  private.key README.md root@161.35.112.238:/root/files/
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.CLOUD_KEY }}
